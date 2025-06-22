@@ -49,7 +49,7 @@ function Navbar() {
   
     </div>
     {/* Cart */}
-    <Link to="/card" className="relative">
+    <Link to="/cart" className="relative">
       <img src={assets.cart_icon} className="w-5 min-w-5 hover:scale-110 transition" alt="" />
       <p className="absolute right-[-5px] bottom-[-5px] w-4 h-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[10px]">
     {getCartCount()}

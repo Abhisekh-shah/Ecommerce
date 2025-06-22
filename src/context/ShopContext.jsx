@@ -9,32 +9,32 @@ const shopContextProvider = (props) => {
   const delivery_fee = 10;
   const [search, setSearch] = useState("");
   const [showSearch, setShowSearch] = useState(false);
-  const [cardItems, setCardItems] = useState({});
+  const [cartItems, setCartItems] = useState({});
 
   const addToCart = async (itemId, size) => {
-    let cardData = structuredClone(cardItems);
+    let cartData = structuredClone(cartItems);
     if (!size) {
       toast.error("Select Product Size");
       return;
     }
 
-    if (cardData[itemId]) {
-      if (cardData[itemId][size]) {
-        cardData[itemId][size] += 1;
+    if (cartData[itemId]) {
+      if (cartData[itemId][size]) {
+        cartData[itemId][size] += 1;
       } else {
-        cardData[itemId][size] = 1;
+        cartData[itemId][size] = 1;
       }
     } else {
-      cardData[itemId] = {};
-      cardData[itemId][size] = 1;
+      cartData[itemId] = {};
+      cartData[itemId][size] = 1;
     }
-    setCardItems(cardData);
+    setCartItems(cartData);
   };
   const getCartCount = () => {
     let totalCount = 0;
   
-    for (const itemId in cardItems) {
-      const sizes = cardItems[itemId]; // e.g., { M: 2, L: 1 }
+    for (const itemId in cartItems) {
+      const sizes = cartItems[itemId]; // e.g., { M: 2, L: 1 }
       for (const size in sizes) {
         totalCount += sizes[size]; // e.g., sizes["M"] = 2
       }
@@ -43,11 +43,24 @@ const shopContextProvider = (props) => {
     return totalCount;
   };
   
+    const updateQuantity = async (itemId,size,quantity) =>{
+        let cartData = structuredClone(cartItems)
 
+        cartData[itemId][size] =quantity;
+
+        setCartItems(cartData);
+    }
+
+    const getCartAmount =async =>{
+      let totalAmount =0;
+      for(const items in cartItems){
+        let itemInfo =products.find((product)=> product.id === items)
+      }
+    }
 
   useEffect(() => {
-    console.log(cardItems);
-  }, [cardItems]);
+    console.log(cartItems);
+  }, [cartItems]);
 
   const value = {
     products,
@@ -58,8 +71,9 @@ const shopContextProvider = (props) => {
     showSearch,
     setShowSearch,
     addToCart,
-    cardItems,
+    cartItems,
     getCartCount,
+    updateQuantity 
   };
   return (
     <ShopContext.Provider value={value}>{props.children}</ShopContext.Provider>
