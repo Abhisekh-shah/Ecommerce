@@ -1,6 +1,8 @@
 import { createContext, useEffect, useState } from "react";
 import { products } from "../assets/assets";
 import { toast } from "react-toastify";
+import { useNavigate } from 'react-router-dom'
+
 
 export const ShopContext = createContext();
 
@@ -10,6 +12,7 @@ const shopContextProvider = (props) => {
   const [search, setSearch] = useState("");
   const [showSearch, setShowSearch] = useState(false);
   const [cartItems, setCartItems] = useState({});
+  const navigate = useNavigate()
 
   const addToCart = async (itemId, size) => {
     let cartData = structuredClone(cartItems);
@@ -34,9 +37,9 @@ const shopContextProvider = (props) => {
     let totalCount = 0;
   
     for (const itemId in cartItems) {
-      const sizes = cartItems[itemId]; // e.g., { M: 2, L: 1 }
+      const sizes = cartItems[itemId]; 
       for (const size in sizes) {
-        totalCount += sizes[size]; // e.g., sizes["M"] = 2
+        totalCount += sizes[size]; 
       }
     }
   
@@ -51,13 +54,25 @@ const shopContextProvider = (props) => {
         setCartItems(cartData);
     }
 
-    const getCartAmount =async =>{
-      let totalAmount =0;
-      for(const items in cartItems){
-        let itemInfo =products.find((product)=> product.id === items)
+    const getCartAmount = () => {
+      let totalAmount = 0;
+    
+      for (const productId in cartItems) {
+        const product = products.find((p) => p._id === productId);
+        if (!product) continue;
+    
+        const sizes = cartItems[productId];
+        for (const size in sizes) {
+          const quantity = sizes[size];
+          if (quantity > 0) {
+            totalAmount += product.price * quantity;
+          }
+        }
       }
-    }
-
+    
+      return totalAmount;
+    };
+    
   useEffect(() => {
     console.log(cartItems);
   }, [cartItems]);
@@ -73,7 +88,9 @@ const shopContextProvider = (props) => {
     addToCart,
     cartItems,
     getCartCount,
-    updateQuantity 
+    updateQuantity,
+    getCartAmount,
+    navigate
   };
   return (
     <ShopContext.Provider value={value}>{props.children}</ShopContext.Provider>
