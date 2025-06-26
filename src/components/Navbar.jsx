@@ -37,7 +37,7 @@ function Navbar() {
   <div className="flex items-center gap-4 relative">
     {/* Profile */}
     <div className="group relative">
-      <img className="w-5 cursor-pointer hover:scale-110 transition" src={assets.profile_icon} alt="" />
+     <Link to='/login'> <img className="w-5 cursor-pointer hover:scale-110 transition" src={assets.profile_icon} alt="" /></Link>
       <div className="group-hover:block hidden absolute right-0 top-full mt-3 z-10">
         <div className="flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded shadow-md">
           <p className="cursor-pointer hover:text-black">My Profile</p>
