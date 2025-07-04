@@ -50,16 +50,40 @@ const addProduct =async (req,res) =>{
 
 // function for list product
 const listProduct =async (req,res) =>{
+   try {
+      
+      const products = await productModel.find({})
+      res.json({sucess:true,products})
+
+   } catch (error) {
+      console.log(error)
+      res.json({sucess:false,message:error.message})
+   }
+
 
 }
 
 // function for removing product
 const removeProduct =async (req,res) =>{
-
+ try {
+   await productModel.findByIdAndDelete(req.body._id)
+   res.json({sucess:true,message:"Product Removed"})
+ } catch (error) {
+   console.log(error)
+   res.json({sucess:false,message:error.message})
+ }
 }
  //function for single product info
 const singleProduct =async (req,res) =>{
-
+try {
+   const {  productId } = req.body;
+   const product= await productModel.findById(productId);
+   res.json({sucess:true,product})
+} catch (error) {
+   console.log(error)
+   res.json({sucess:false,message:error.message})
 }
+}
+
 
 export {listProduct,addProduct,removeProduct,singleProduct}
