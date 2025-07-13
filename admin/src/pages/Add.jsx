@@ -7,6 +7,13 @@ function Add() {
   const [image3,setImage3] = useState(false)
   const [image4,setImage4] = useState(false)
 
+  const [name,setName] = useState("")
+  const [description,setDescription] = useState("")
+  const [price,setPrice] = useState("")
+  const [category,setCategory] = useState("")
+  const [subCategory,setSubCategory] = useState("Men")
+  const [bestseller,setBestSeller] = useState(false)
+  const [Sizes ,setSizes] = useState ([])
 
 
   return (
@@ -16,27 +23,27 @@ function Add() {
 
     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
       <label className="flex flex-col items-center justify-center h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-blue-500 transition" htmlFor="image1">
-        <img src={assets.upload_area} alt="Upload" className="w-10 h-10 mb-2 opacity-60" />
+        <img src={!image1 ? assets.upload_area : URL.createObjectURL(image1)} alt="Upload" className="w-10 h-10 mb-2 opacity-60" />
         <span className="text-sm text-gray-500">Image 1</span>
-        <input type="file" id="image1" hidden />
+        <input onChange={(e)=>setImage1(e.target.files[0])} type="file" id="image1" hidden />
       </label>
 
       <label className="flex flex-col items-center justify-center h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-blue-500 transition" htmlFor="image2">
-        <img src={assets.upload_area} alt="Upload" className="w-10 h-10 mb-2 opacity-60" />
+        <img src={!image2 ? assets.upload_area : URL.createObjectURL(image2)} alt="Upload" className="w-10 h-10 mb-2 opacity-60" />
         <span className="text-sm text-gray-500">Image 2</span>
-        <input type="file" id="image2" hidden />
+        <input onChange={(e)=>setImage2(e.target.files[0])} type="file" id="image2" hidden />
       </label>
 
       <label className="flex flex-col items-center justify-center h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-blue-500 transition" htmlFor="image3">
-        <img src={assets.upload_area} alt="Upload" className="w-10 h-10 mb-2 opacity-60" />
+        <img src={!image3 ? assets.upload_area : URL.createObjectURL(image3)} alt="Upload" className="w-10 h-10 mb-2 opacity-60" />
         <span className="text-sm text-gray-500">Image 3</span>
-        <input type="file" id="image3" hidden />
+        <input onChange={(e)=>setImage3(e.target.files[0])} type="file" id="image3" hidden />
       </label>
 
       <label className="flex flex-col items-center justify-center h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-blue-500 transition" htmlFor="image4">
-        <img src={assets.upload_area} alt="Upload" className="w-10 h-10 mb-2 opacity-60" />
+        <img src={!image4 ? assets.upload_area : URL.createObjectURL(image4)} alt="Upload" className="w-10 h-10 mb-2 opacity-60" />
         <span className="text-sm text-gray-500">Image 4</span>
-        <input type="file" id="image4" hidden />
+        <input onChange={(e)=>setImage4(e.target.files[0])} type="file" id="image4" hidden />
       </label>
     </div>
 
@@ -47,6 +54,8 @@ function Add() {
     Product Name:
   </label>
   <input
+  onChange={(e)=>setName(e.target.value)}
+  value={name}
     id="productName"
     type="text"
     placeholder="Type here"
@@ -59,7 +68,9 @@ function Add() {
     Product description:
   </label>
   <input
-    id="productName"
+    onChange={(e)=>setDescription(e.target.value)}
+    value={description}
+    id="productdescription"
     type="text"
     placeholder="Write content here"
     required
@@ -73,6 +84,7 @@ function Add() {
       Product Category
     </label>
     <select
+      onChange={(e)=> setCategory(e.target.value)}
       id="category"
       className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
     >
@@ -88,6 +100,7 @@ function Add() {
       Sub Category
     </label>
     <select
+    onChange={(e)=> setSubCategory(e.target.value)}
       id="subCategory"
       className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
     >
@@ -103,6 +116,8 @@ function Add() {
       Product Price
     </label>
     <input
+     onChange={(e)=> setPrice(e.target.value)}
+     value={price}
       id="price"
       type="number"
       placeholder="25"
