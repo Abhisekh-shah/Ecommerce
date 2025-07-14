@@ -13,11 +13,35 @@ function Add() {
   const [category,setCategory] = useState("")
   const [subCategory,setSubCategory] = useState("Men")
   const [bestseller,setBestSeller] = useState(false)
-  const [Sizes ,setSizes] = useState ([])
+  const [sizes ,setSizes] = useState ([])
+
+  const onSubmitHandler = async (e)=>{
+    e.preventDefault()
+    try {
+      
+      const formData =new FormData ()
+
+      formData.append("name",name)
+      formData.append("description",description)
+      formData.append("price",price)
+      formData.append("category",category)
+      formData.append("subCategory",subCategory)
+      formData.append("bestseller",bestseller)
+      formData.append("sizes",JSON.stringify(sizes))
+
+      image1 && formData.append("image1",image1)
+      image2 && formData.append("image2",image2)
+      image3 && formData.append("image3",image3)
+      image4 && formData.append("image4",image4)
+
+    } catch (error) {
+      
+    }
+  }
 
 
   return (
-    <form className="bg-white p-6 rounded-xl shadow-md w-full max-w-4xl">
+    <form onSubmit={onSubmitHandler} className="bg-white p-6 rounded-xl shadow-md w-full max-w-4xl">
   <div>
     <p className="text-xl font-semibold text-gray-800 mb-4">Upload Product Images</p>
 
@@ -129,20 +153,20 @@ function Add() {
 <div className="mb-6">
   <p className="text-gray-700 font-medium mb-2">Product Sizes</p>
   <div className="flex flex-wrap gap-3">
-    <div className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 cursor-pointer hover:bg-blue-500 hover:text-white transition">
-      <p>S</p>
+    <div onClick={()=>setSizes(prev => prev.includes("S") ? prev.filter(item => item !== "S") : [...prev,"S"])} className=" border border-gray-300 r text-gray-700 cursor-pointer hover:bg-blue-500 hover:text-white transition">
+      <p className={`${sizes.includes("S") ? "bg-pink-100" : "bg-slate-200"} px-4 py-2 text-black`}>S</p>
     </div>
-    <div className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 cursor-pointer hover:bg-blue-500 hover:text-white transition">
-      <p>M</p>
+    <div onClick={()=>setSizes(prev => prev.includes("M") ? prev.filter(item => item !== "M") : [...prev,"M"])} className="border border-gray-300  text-gray-700 cursor-pointer hover:bg-blue-500 hover:text-white transition">
+      <p className={`${sizes.includes("M") ? "bg-pink-100" : "bg-slate-200"} px-4 py-2 text-black`}>M</p>
     </div>
-    <div className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 cursor-pointer hover:bg-blue-500 hover:text-white transition">
-      <p>L</p>
+    <div onClick={()=>setSizes(prev => prev.includes("L") ? prev.filter(item => item !== "L") : [...prev,"L"])} className="border border-gray-300  text-gray-700 cursor-pointer hover:bg-blue-500 hover:text-white transition">
+      <p className={`${sizes.includes("L") ? "bg-pink-100" : "bg-slate-200"} px-4 py-2 text-black`}>L</p>
     </div>
-    <div className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 cursor-pointer hover:bg-blue-500 hover:text-white transition">
-      <p>XL</p>
+    <div onClick={()=>setSizes(prev => prev.includes("XL") ? prev.filter(item => item !== "XL") : [...prev,"XL"])} className="border border-gray-300  text-gray-700 cursor-pointer hover:bg-blue-500 hover:text-white transition">
+      <p className={`${sizes.includes("XL") ? "bg-pink-100" : "bg-slate-200"} px-4 py-2 text-black`}>XL</p>
     </div>
-    <div className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 cursor-pointer hover:bg-blue-500 hover:text-white transition">
-      <p>XXL</p>
+    <div onClick={()=>setSizes(prev => prev.includes("XXL") ? prev.filter(item => item !== "XXL") : [...prev,"XXL"])} className="border border-gray-300  text-gray-700 cursor-pointer hover:bg-blue-500 hover:text-white transition">
+      <p className={`${sizes.includes("XXL") ? "bg-pink-100" : "bg-slate-200"} px-4 py-2 text-black`}>XXL</p>
     </div>
   </div>
 </div>
@@ -151,6 +175,8 @@ function Add() {
   <input
     type="checkbox"
     id="bestseller"
+    onChange={()=> setBestSeller(prev => !prev)}
+    checked={bestseller}
     className="w-5 h-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500"
   />
   <label htmlFor="bestseller" className="text-gray-700 font-medium cursor-pointer">
